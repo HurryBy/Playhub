@@ -1,0 +1,30 @@
+{
+  "wallpaper": "",
+  "sites": [
+    {
+      "key": "mock",
+      "name": "本地模拟源",
+      "type": 4,
+      "api": "http://127.0.0.1:18080/mock/api",
+      "searchable": 1,
+      "quickSearch": 1,
+      "filterable": 1,
+      "playUrl": "",
+      "ext": "",
+      "jar": ""
+    }
+  ],
+  "parses": [
+    {
+      "name": "直连",
+      "url": "",
+      "type": 0,
+      "ext": {}
+    }
+  ],
+  "flags": [
+    "线路A",
+    "线路B"
+  ],
+  "lives": []
+}

@@ -1,0 +1,23 @@
+server:
+  port: 18080
+  tomcat:
+    threads:
+      max: 48
+      min-spare: 4
+    accept-count: 24
+
+spring:
+  jackson:
+    serialization:
+      indent-output: true
+
+app:
+  cache-dir: .cache/tvbox
+  spider-bridge-url: ""
+  spider-operation-timeout-seconds: 25
+  spider-operation-max-concurrency: 4
+  spider-operation-queue-capacity: 8
+  script-timeout-seconds: 90
+  script-max-concurrency: 2
+  script-admission-timeout-seconds: 3
+  dex2jar-command: "\"d:\\develop\\tvbox-web\\tools\\dex-tools-v2.4\\d2j-dex2jar.bat\" {input} -o {output} --force"
