@@ -118,7 +118,9 @@ function mergeLiveChannels(rawChannels = []) {
   return [...mergedMap.values()].map((item, index) => ({
     ...item,
     id: item.id || `live-${index}`,
-    sources: item.sources.length ? item.sources : [{ id: `fallback-${index}`, url: '', logo: item.logo, label: `源 ${index + 1}` }],
+    sources: item.sources.length
+      ? item.sources
+      : [{ id: `fallback-${index}`, url: '', logo: item.logo, label: `源 ${index + 1}` }],
   }))
 }
 
@@ -163,6 +165,7 @@ export const useTvboxStore = defineStore('tvbox', () => {
   const bootstrapped = ref(false)
 
   const configUrl = ref('')
+  const appTheme = ref('naifei')
   const searchScope = ref('current')
   const liveSourceUrl = ref('')
   const liveEpgUrl = ref('')
@@ -259,13 +262,19 @@ export const useTvboxStore = defineStore('tvbox', () => {
     if (!searchProgress.totalSources) {
       return 0
     }
-    return Math.min(100, Math.round((searchProgress.completedSources / searchProgress.totalSources) * 100))
+    return Math.min(
+      100,
+      Math.round((searchProgress.completedSources / searchProgress.totalSources) * 100),
+    )
   })
-  const showSourceBadges = computed(() => wallMode.value === 'search' && searchScope.value === 'all')
+  const showSourceBadges = computed(
+    () => wallMode.value === 'search' && searchScope.value === 'all',
+  )
 
   function persistSettings() {
     writeStorage(SETTINGS_KEY, {
       configUrl: configUrl.value,
+      appTheme: appTheme.value,
       selectedSourceUid: selectedSourceUid.value,
       searchScope: searchScope.value,
       liveSourceUrl: liveSourceUrl.value,
@@ -289,6 +298,7 @@ export const useTvboxStore = defineStore('tvbox', () => {
     const savedSettings = readStorage(SETTINGS_KEY, {})
     const savedHistory = readStorage(HISTORY_KEY, [])
     configUrl.value = savedSettings.configUrl || ''
+    appTheme.value = savedSettings.appTheme || 'default'
     selectedSourceUid.value = savedSettings.selectedSourceUid || ''
     searchScope.value = savedSettings.searchScope || 'current'
     liveSourceUrl.value = savedSettings.liveSourceUrl || ''
@@ -375,7 +385,9 @@ export const useTvboxStore = defineStore('tvbox', () => {
 
   function appendUniqueWallVideos(items) {
     const existing = new Set(
-      wallVideos.value.map((item) => `${item.sourceUid || selectedSourceUid.value}::${String(item.id)}`),
+      wallVideos.value.map(
+        (item) => `${item.sourceUid || selectedSourceUid.value}::${String(item.id)}`,
+      ),
     )
     const next = [...wallVideos.value]
     for (const item of items) {
@@ -393,7 +405,9 @@ export const useTvboxStore = defineStore('tvbox', () => {
 
   function prependUniqueWallVideos(items) {
     const existing = new Set(
-      wallVideos.value.map((item) => `${item.sourceUid || selectedSourceUid.value}::${String(item.id)}`),
+      wallVideos.value.map(
+        (item) => `${item.sourceUid || selectedSourceUid.value}::${String(item.id)}`,
+      ),
     )
     const front = []
     for (const item of items) {
@@ -448,11 +462,15 @@ export const useTvboxStore = defineStore('tvbox', () => {
     history.value = [
       entry,
       ...history.value.filter(
-        (item) => historyKeyOf(item.sourceUid, item.vodId) !== historyKeyOf(entry.sourceUid, entry.vodId),
+        (item) =>
+          historyKeyOf(item.sourceUid, item.vodId) !== historyKeyOf(entry.sourceUid, entry.vodId),
       ),
     ].slice(0, 120)
 
-    if (currentDetail.value?.sourceUid === detail.sourceUid && currentDetail.value?.id === detail.id) {
+    if (
+      currentDetail.value?.sourceUid === detail.sourceUid &&
+      currentDetail.value?.id === detail.id
+    ) {
       currentDetail.value = {
         ...currentDetail.value,
         resume: entry,
@@ -510,7 +528,11 @@ export const useTvboxStore = defineStore('tvbox', () => {
 
     currentLiveChannelId.value = target.id
     currentLiveSourceIndex.value = 0
-    if (target.group && liveGroupName.value !== '全部频道' && liveGroupName.value !== target.group) {
+    if (
+      target.group &&
+      liveGroupName.value !== '全部频道' &&
+      liveGroupName.value !== target.group
+    ) {
       liveGroupName.value = target.group
     }
   }
@@ -711,7 +733,9 @@ export const useTvboxStore = defineStore('tvbox', () => {
     clearCurrentPlayback()
     loading.wall = true
     try {
-      const payload = await getJson(`/api/source/${encodeURIComponent(source.uid)}/home?filter=true`)
+      const payload = await getJson(
+        `/api/source/${encodeURIComponent(source.uid)}/home?filter=true`,
+      )
       classes.value = normalizeClasses(payload)
       wallFilters.value = payload?.filters || {}
       activeClassId.value = ''
@@ -883,7 +907,10 @@ export const useTvboxStore = defineStore('tvbox', () => {
     searchProgress.active = false
     searchProgress.currentSourceName = ''
     wallPagination.total = wallVideos.value.length
-    wallPagination.pageCount = Math.max(1, Math.ceil(wallVideos.value.length / wallPagination.pageSize))
+    wallPagination.pageCount = Math.max(
+      1,
+      Math.ceil(wallVideos.value.length / wallPagination.pageSize),
+    )
 
     if (wallVideos.value.length) {
       setStatus(
@@ -939,10 +966,15 @@ export const useTvboxStore = defineStore('tvbox', () => {
     }
 
     loading.detail = true
-    if (historyKeyOf(currentDetail.value?.sourceUid || '', currentDetail.value?.id || '') !== cacheKey) {
+    if (
+      historyKeyOf(currentDetail.value?.sourceUid || '', currentDetail.value?.id || '') !== cacheKey
+    ) {
       currentDetail.value = null
     }
-    if (historyKeyOf(currentPlayback.value?.sourceUid || '', currentPlayback.value?.vodId || '') !== cacheKey) {
+    if (
+      historyKeyOf(currentPlayback.value?.sourceUid || '', currentPlayback.value?.vodId || '') !==
+      cacheKey
+    ) {
       currentPlayback.value = null
     }
 
@@ -977,7 +1009,9 @@ export const useTvboxStore = defineStore('tvbox', () => {
     }
 
     const resumeEntry =
-      options.resume || options.useStoredResume ? getHistoryEntry(detail.sourceUid, detail.id) : null
+      options.resume || options.useStoredResume
+        ? getHistoryEntry(detail.sourceUid, detail.id)
+        : null
     const group =
       groups.find((item) => item.name === options.flagName) ||
       groups.find((item) => item.name === resumeEntry?.playFlag) ||
@@ -1098,6 +1132,11 @@ export const useTvboxStore = defineStore('tvbox', () => {
     persistSettings()
   }
 
+  function updateAppTheme(theme) {
+    appTheme.value = theme === 'naifei' ? 'naifei' : 'default'
+    persistSettings()
+  }
+
   function clearHistory() {
     history.value = []
     persistHistory()
@@ -1107,6 +1146,7 @@ export const useTvboxStore = defineStore('tvbox', () => {
   return {
     defaultConfigUrl,
     configUrl,
+    appTheme,
     searchScope,
     liveSourceUrl,
     liveEpgUrl,
@@ -1156,6 +1196,7 @@ export const useTvboxStore = defineStore('tvbox', () => {
     searchVideos,
     ensureDetail,
     playEpisode,
+    updateAppTheme,
     updateSearchScope,
     updateLiveSettings,
     loadLiveData,
