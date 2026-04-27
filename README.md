@@ -17,7 +17,6 @@
   <a href="#-特性">特性</a> •
   <a href="#-快速开始">快速开始</a> •
   <a href="#-使用指南">使用指南</a> •
-  <a href="#-技术映射">技术映射</a> •
   <a href="#-注意事项">注意事项</a> •
   <a href="#-致谢">致谢</a>
 </p>
@@ -54,7 +53,22 @@
 | **Python**    | 3.9+     | 部分 Spider Bridge 依赖 |
 | **Maven**     | 3.9+     | 调试时使用（可选） |
 
-### 本地运行
+### 🐳 Docker 部署（推荐）
+
+如果你已安装 Docker，可以使用预构建的镜像快速体验 PlayHUB，无需配置 Java、Node 等环境。
+
+```bash
+# 拉取镜像
+docker pull hurryos/playhub
+
+# 启动容器（默认使用 18080 端口）
+docker run -d --name playhub -p 18080:18080 hurryos/playhub
+```
+
+启动后，访问 [http://localhost:18080](http://localhost:18080) 即可使用。  
+若需要自定义端口，请修改 `-p` 参数，例如 `-p 8080:18080`，然后访问 `http://localhost:8080`。
+
+### 本地运行（开发 / 自定义构建）
 
 #### 1. 克隆仓库
 
@@ -114,9 +128,6 @@ mvn spring-boot:run
 ## ⚠️ 注意事项
 
 - 当前后端 **优先支持 `type=3`（JAR Spider）** 以及提供标准 JSON 接口的站点。  
-- 部分 Spider 强依赖 Android Context（如 `Toast`、`SharedPreferences`），在纯 JVM 环境下可能无法正常运行。  
-- 后缀为 `.js` 的 JS 蜘蛛，以及 `dex-only` 的 JAR 蜘蛛，会自动降级到 **Spider Bridge** 执行。  
-- 浏览器 `localStorage` 容量有限（通常 5–10 MB），大量收藏或历史记录时建议及时清理。
 
 ---
 
