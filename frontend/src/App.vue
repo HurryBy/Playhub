@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, provide, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { ArrowLeft, Clock, House, Setting, VideoPlay } from '@element-plus/icons-vue'
@@ -28,6 +28,9 @@ const searchScopeLabel = computed(() =>
 const currentConfigHost = computed(() => parseHost(draftConfigUrl.value || store.configUrl))
 const currentLiveSourceHost = computed(() => parseHost(draftLiveSourceUrl.value || store.liveSourceUrl))
 const currentLiveEpgHost = computed(() => parseHost(draftLiveEpgUrl.value || store.liveEpgUrl))
+const appFrameClass = computed(() => ({
+  'app-frame--naifei': store.appTheme === 'naifei',
+}))
 
 function parseHost(raw) {
   const value = String(raw || '').trim()
@@ -51,6 +54,14 @@ function openSettings() {
   syncDrafts()
   settingsOpen.value = true
 }
+
+function applyTheme(theme) {
+  if (typeof document !== 'undefined') {
+    document.documentElement.dataset.theme = theme === 'naifei' ? 'naifei' : 'default'
+  }
+}
+
+provide('openSettings', openSettings)
 
 async function reloadConfig() {
   await store.loadConfig(draftConfigUrl.value, { autoLoadHome: true })
@@ -114,12 +125,15 @@ async function handlePrimaryNav() {
       store.playerOrigin?.name === 'detail' &&
       store.playerOrigin?.query?.source &&
       store.playerOrigin?.query?.vod
+    const hasPlayerOriginHome = store.playerOrigin?.name === 'home'
     const target =
       store.playerOrigin?.name === 'history'
         ? cloneTarget(store.playerOrigin, 'history')
-        : hasPlayerOriginDetail
-          ? cloneTarget(store.playerOrigin, 'detail')
-          : detailTarget
+        : hasPlayerOriginHome
+          ? cloneTarget(store.playerOrigin, 'home')
+          : hasPlayerOriginDetail
+            ? cloneTarget(store.playerOrigin, 'detail')
+            : detailTarget
     await router.replace(target)
     return
   }
@@ -163,6 +177,14 @@ watch(
 )
 
 watch(
+  () => store.appTheme,
+  (theme) => {
+    applyTheme(theme)
+  },
+  { immediate: true },
+)
+
+watch(
   () => [store.status.type, store.status.text],
   ([type, text]) => {
     if (!type || !text) {
@@ -183,12 +205,13 @@ watch(
 
 onMounted(async () => {
   syncDrafts()
+  applyTheme(store.appTheme)
   await store.bootstrap().catch(() => {})
 })
 </script>
 
 <template>
-  <div class="app-frame">
+  <div class="app-frame" :class="appFrameClass">
     <aside class="app-rail">
       <button
         type="button"
@@ -264,7 +287,7 @@ onMounted(async () => {
             <p class="block-label">概览</p>
             <h4>当前会话状态</h4>
           </div>
-          <span class="settings-mini-chip">点播与直播互不覆盖</span>
+          <span class="settings-mini-chip"></span>
         </div>
 
         <div class="drawer-overview-grid drawer-overview-grid--compact">
@@ -301,7 +324,28 @@ onMounted(async () => {
         </div>
       </section>
 
-      <section class="settings-block settings-block--accent">
+      <section class="settings-block settings-block--theme">
+        <div class="settings-block-head">
+          <div>
+            <p class="block-label">界面主题</p>
+            <h4>选择前端显示风格</h4>
+          </div>
+          <span class="settings-mini-chip">
+            {{ store.appTheme === 'naifei' ? '经典' : '默认' }}
+          </span>
+        </div>
+
+        <el-radio-group
+          :model-value="store.appTheme"
+          class="settings-radio-group theme-radio-group"
+          @update:model-value="store.updateAppTheme"
+        >
+          <el-radio-button :value="'default'">默认</el-radio-button>
+          <el-radio-button :value="'naifei'">经典</el-radio-button>
+        </el-radio-group>
+      </section>
+
+      <section class="settings-block settings-block--accent settings-block--source">
         <div class="settings-block-head">
           <div>
             <p class="block-label">当前视频源</p>
@@ -332,7 +376,7 @@ onMounted(async () => {
         </div>
       </section>
 
-      <section class="settings-block">
+      <section class="settings-block settings-block--search-scope">
         <div class="settings-block-head">
           <div>
             <p class="block-label">搜索范围</p>
@@ -355,7 +399,7 @@ onMounted(async () => {
         </p>
       </section>
 
-      <section class="settings-block">
+      <section class="settings-block settings-block--vod-config">
         <div class="settings-block-head">
           <div>
             <p class="block-label">点播配置 URL</p>
@@ -383,7 +427,7 @@ onMounted(async () => {
         </div>
       </section>
 
-      <section class="settings-block settings-block--accent settings-block--live">
+      <section class="settings-block settings-block--accent settings-block--live settings-block--live-config">
         <div class="settings-block-head">
           <div>
             <p class="block-label">直播配置</p>

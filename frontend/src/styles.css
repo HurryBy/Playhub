@@ -888,6 +888,38 @@ button {
   width: 58%;
 }
 
+.player-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #d6aa57;
+  font-size: inherit;
+  cursor: pointer;
+  transition: color 200ms ease;
+}
+
+.player-back-btn:hover {
+  color: #e8c77a;
+}
+
+html[data-theme='naifei'] .naifei-player-actions .player-back-btn,
+html[data-theme='naifei'] .player-back-btn {
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: inherit;
+  font-weight: inherit;
+  padding: 0;
+}
+
+html[data-theme='naifei'] .naifei-player-actions .player-back-btn:hover,
+html[data-theme='naifei'] .player-back-btn:hover {
+  color: var(--nf-red);
+}
+
 .player-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(320px, 0.92fr);
@@ -1029,7 +1061,7 @@ button {
 .settings-drawer .el-drawer {
   width: min(560px, 96vw) !important;
   background:
-    linear-gradient(180deg, rgba(10, 19, 36, 0.98), rgba(8, 14, 26, 0.96)),
+    linear-gradient(180deg, rgba(10, 19, 36, 1), rgba(8, 14, 26, 1)),
     radial-gradient(circle at top, rgba(214, 170, 87, 0.16), transparent 30%);
 }
 
@@ -2079,6 +2111,977 @@ button {
 
   .live-programme-item {
     grid-template-columns: 1fr;
+  }
+}
+
+html[data-theme='naifei'] {
+  --nf-bg: #070707;
+  --nf-panel: rgba(38, 38, 38, 0.86);
+  --nf-panel-soft: rgba(34, 34, 34, 0.72);
+  --nf-panel-strong: rgba(22, 22, 22, 0.94);
+  --nf-text: #f6f6f6;
+  --nf-muted: rgba(255, 255, 255, 0.62);
+  --nf-line: rgba(255, 255, 255, 0.08);
+  --nf-red: #d93a42;
+  --nf-red-deep: #8f2029;
+  --nf-radius: 8px;
+  --bg: #070707;
+  --panel: rgba(38, 38, 38, 0.78);
+  --text: #f6f6f6;
+  --muted: rgba(255, 255, 255, 0.66);
+  --accent: #d93a42;
+  --accent-strong: #ff4a55;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(217, 58, 66, 0.55);
+  --el-color-primary: #d93a42;
+  --el-bg-color: rgba(28, 28, 28, 0.94);
+  --el-text-color-primary: #f6f6f6;
+  --el-text-color-regular: rgba(255, 255, 255, 0.78);
+  --el-border-color: rgba(255, 255, 255, 0.1);
+}
+
+html[data-theme='naifei'] body,
+html[data-theme='naifei'] #app {
+  min-height: 100dvh;
+  background: #070707;
+}
+
+html[data-theme='naifei'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, rgba(12, 12, 12, 0.95), rgba(14, 14, 14, 0.86)),
+    repeating-radial-gradient(circle at 74% 58%, rgba(255, 255, 255, 0.045) 0 2px, transparent 3px 72px),
+    radial-gradient(ellipse at 92% 54%, rgba(255, 255, 255, 0.14), transparent 18%),
+    linear-gradient(180deg, #090909, #050505);
+}
+
+html[data-theme='naifei'] body::after {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 32px;
+  z-index: 2001;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.32) 0 8%, transparent 9%),
+    linear-gradient(#f5f5f5, #f5f5f5);
+  background-size: 260px 8px, 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center 12px, center;
+}
+
+html[data-theme='naifei'] .app-frame {
+  display: block;
+  min-height: 100dvh;
+}
+
+html[data-theme='naifei'] .app-rail {
+  display: none;
+}
+
+html[data-theme='naifei'] .app-stage {
+  min-height: 100dvh;
+  padding: 28px 64px 64px;
+}
+
+html[data-theme='naifei'] .page {
+  gap: 22px;
+}
+
+html[data-theme='naifei'] .naifei-title,
+html[data-theme='naifei'] .naifei-home-top,
+html[data-theme='naifei'] .naifei-status-icons,
+html[data-theme='naifei'] .naifei-action-grid,
+html[data-theme='naifei'] .naifei-search-layout,
+html[data-theme='naifei'] .naifei-player-head {
+  animation: naifei-rise 320ms ease both;
+}
+
+html[data-theme='naifei'] .naifei-home-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+html[data-theme='naifei'] .naifei-title {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 14px;
+}
+
+html[data-theme='naifei'] .naifei-title span {
+  width: 5px;
+  height: 56px;
+  border-radius: 999px;
+  background: var(--nf-red);
+  box-shadow: 0 0 22px rgba(217, 58, 66, 0.4);
+}
+
+html[data-theme='naifei'] .naifei-title h1 {
+  margin: 0;
+  color: var(--nf-text);
+  font-size: clamp(2rem, 3.4vw, 3.1rem);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+html[data-theme='naifei'] .naifei-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  color: #fff;
+  font-size: 2.4rem;
+}
+
+html[data-theme='naifei'] .naifei-status-icons strong {
+  font-size: clamp(1.25rem, 2.1vw, 2rem);
+  white-space: nowrap;
+}
+
+html[data-theme='naifei'] .naifei-plain-icon {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+html[data-theme='naifei'] .naifei-chevron-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  width: 48px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+html[data-theme='naifei'] .naifei-chevron-pair span {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-top: 6px solid #fff;
+  border-left: 6px solid #fff;
+  transform: rotate(45deg);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+html[data-theme='naifei'] .naifei-chevron-pair span:last-child {
+  transform: rotate(225deg);
+}
+
+html[data-theme='naifei'] .naifei-chevron-pair:hover span,
+html[data-theme='naifei'] .naifei-chevron-pair.active span {
+  border-color: var(--nf-red);
+}
+
+html[data-theme='naifei'] .naifei-chevron-pair.active span:first-child {
+  transform: rotate(135deg);
+}
+
+html[data-theme='naifei'] .naifei-chevron-pair.active span:last-child {
+  transform: rotate(-45deg);
+}
+
+html[data-theme='naifei'] .naifei-category-tabs {
+  display: flex;
+  gap: clamp(22px, 4vw, 58px);
+  align-items: center;
+  overflow-x: auto;
+  padding: 0 0 8px;
+  scrollbar-width: none;
+}
+
+html[data-theme='naifei'] .naifei-category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+html[data-theme='naifei'] .naifei-category-tabs button {
+  flex: 0 0 auto;
+  min-height: 64px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 32px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: clamp(1.4rem, 2.5vw, 2.4rem);
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+html[data-theme='naifei'] .naifei-category-tabs button.active {
+  background: linear-gradient(180deg, #9e2930, #7f1f27);
+  color: #fff;
+}
+
+html[data-theme='naifei'] .naifei-category-tabs button:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+html[data-theme='naifei'] .naifei-action-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(120px, 1fr));
+  gap: 18px;
+}
+
+html[data-theme='naifei'] .naifei-action-grid button,
+html[data-theme='naifei'] .naifei-search-actions button,
+html[data-theme='naifei'] .naifei-keyboard button,
+html[data-theme='naifei'] .naifei-hot-panel button,
+html[data-theme='naifei'] .naifei-player-actions button,
+html[data-theme='naifei'] .naifei-player-lines button,
+html[data-theme='naifei'] .naifei-episode-grid button {
+  border: 0;
+  border-radius: var(--nf-radius);
+  background: var(--nf-panel);
+  color: var(--nf-text);
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+html[data-theme='naifei'] .naifei-action-grid button {
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  font-size: clamp(1.35rem, 2.2vw, 2.05rem);
+  font-weight: 800;
+}
+
+html[data-theme='naifei'] .naifei-action-grid .el-icon {
+  font-size: 2.9rem;
+}
+
+html[data-theme='naifei'] .naifei-action-grid button:hover,
+html[data-theme='naifei'] .naifei-search-actions button:hover,
+html[data-theme='naifei'] .naifei-keyboard button:hover,
+html[data-theme='naifei'] .naifei-hot-panel button:hover,
+html[data-theme='naifei'] .naifei-player-actions button:hover,
+html[data-theme='naifei'] .naifei-player-lines button:hover,
+html[data-theme='naifei'] .naifei-episode-grid button:hover {
+  transform: translateY(-2px);
+  background: rgba(55, 55, 55, 0.94);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme='naifei'] .wall-panel--masonry {
+  padding: 12px 0 0;
+}
+
+html[data-theme='naifei'] .wall-grid--masonry {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
+  gap: 22px 26px;
+  column-width: auto;
+}
+
+html[data-theme='naifei'] .poster-card {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  border-radius: var(--nf-radius);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme='naifei'] .poster-media {
+  aspect-ratio: 0.72;
+  border: 2px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--nf-radius);
+  background: #151515;
+}
+
+html[data-theme='naifei'] .poster-image {
+  object-fit: cover;
+}
+
+html[data-theme='naifei'] .poster-source {
+  top: 8px;
+  left: 8px;
+  max-width: calc(100% - 16px);
+  min-height: 0;
+  padding: 3px 7px;
+  border: 0;
+  border-radius: 5px;
+  background: rgba(20, 20, 20, 0.52);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+html[data-theme='naifei'] .poster-remarks {
+  left: 8px;
+  bottom: 44px;
+  max-width: calc(100% - 16px);
+  padding: 3px 7px;
+  border: 0;
+  border-radius: 5px;
+  background: rgba(20, 20, 20, 0.5);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+html[data-theme='naifei'] .poster-copy {
+  min-height: 42px;
+  align-items: center;
+  margin-top: -42px;
+  padding: 6px 10px;
+  z-index: 2;
+  background: linear-gradient(90deg, rgba(8, 8, 8, 0.78), rgba(8, 8, 8, 0.35));
+  pointer-events: none;
+}
+
+html[data-theme='naifei'] .poster-title {
+  color: #fff;
+  font-size: clamp(1rem, 1.5vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-theme='naifei'] .poster-subtitle {
+  display: none;
+}
+
+html[data-theme='naifei'] .naifei-search-layout {
+  min-height: calc(100dvh - 96px);
+  display: grid;
+  grid-template-columns: minmax(360px, 30vw) minmax(180px, 12vw) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+html[data-theme='naifei'] .naifei-search-pad,
+html[data-theme='naifei'] .naifei-hot-panel {
+  display: grid;
+  gap: 12px;
+}
+
+html[data-theme='naifei'] .naifei-search-input-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 78px;
+  gap: 14px;
+}
+
+html[data-theme='naifei'] .naifei-search-back {
+  min-height: 76px;
+  border: 2px solid rgba(255, 255, 255, 0.52);
+  border-radius: var(--nf-radius);
+  background: rgba(36, 36, 36, 0.78);
+  color: #fff;
+  font-size: 2.3rem;
+  font-weight: 900;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+html[data-theme='naifei'] .naifei-search-back:hover {
+  border-color: var(--nf-red);
+  background: rgba(120, 29, 37, 0.82);
+  transform: translateX(-2px);
+}
+
+html[data-theme='naifei'] .naifei-search-input .el-input__wrapper {
+  min-height: 76px;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: var(--nf-radius);
+  background: rgba(8, 8, 8, 0.72);
+  box-shadow: none;
+  color: #fff;
+}
+
+html[data-theme='naifei'] .naifei-search-input .el-input__inner {
+  color: #fff;
+  font-size: 1.55rem;
+  font-weight: 700;
+}
+
+html[data-theme='naifei'] .naifei-icon-button {
+  display: grid;
+  place-items: center;
+  min-height: 76px;
+  border: 0;
+  border-radius: var(--nf-radius);
+  background: var(--nf-panel);
+  color: #fff;
+  font-size: 2.4rem;
+}
+
+html[data-theme='naifei'] .naifei-search-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+html[data-theme='naifei'] .naifei-search-actions button {
+  min-height: 78px;
+  font-size: 1.45rem;
+  font-weight: 800;
+}
+
+html[data-theme='naifei'] .naifei-keyboard {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+html[data-theme='naifei'] .naifei-keyboard button {
+  min-height: 76px;
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+html[data-theme='naifei'] .naifei-hot-panel h2 {
+  margin: 0;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 1.45rem;
+}
+
+html[data-theme='naifei'] .naifei-hot-panel button {
+  min-height: 75px;
+  padding: 0 16px;
+  font-size: 1.28rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-theme='naifei'] .naifei-search-results {
+  padding: 0;
+}
+
+html[data-theme='naifei'] .naifei-search-results .wall-grid--masonry {
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+html[data-theme='naifei'] .naifei-search-results .poster-media {
+  aspect-ratio: 0.72;
+}
+
+html[data-theme='naifei'] .wall-panel--classic-row {
+  overflow: hidden;
+}
+
+html[data-theme='naifei'] .wall-panel--classic-row .wall-grid--masonry {
+  display: flex;
+  grid-template-columns: none;
+  column-width: auto;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 2px 20px;
+  scroll-snap-type: x mandatory;
+}
+
+html[data-theme='naifei'] .wall-panel--classic-row .wall-grid--masonry::-webkit-scrollbar {
+  height: 7px;
+}
+
+html[data-theme='naifei'] .wall-panel--classic-row .wall-grid--masonry::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+html[data-theme='naifei'] .wall-panel--classic-row .poster-card {
+  flex: 0 0 clamp(190px, 16vw, 270px);
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+html[data-theme='naifei'] .stream-progress-panel {
+  border-radius: var(--nf-radius);
+  background: rgba(28, 28, 28, 0.84);
+}
+
+html[data-theme='naifei'] .player-page--naifei {
+  gap: 18px;
+}
+
+html[data-theme='naifei'] .naifei-player-head {
+  display: grid;
+  grid-template-columns: minmax(500px, 43vw) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+html[data-theme='naifei'] .naifei-player-frame {
+  aspect-ratio: 16 / 9;
+  min-height: 320px;
+  background: #000;
+}
+
+html[data-theme='naifei'] .naifei-player-frame .smart-player-wrap,
+html[data-theme='naifei'] .naifei-player-frame .smart-player {
+  height: 100%;
+}
+
+html[data-theme='naifei'] .naifei-player-info {
+  min-height: 320px;
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding-top: 4px;
+}
+
+html[data-theme='naifei'] .naifei-player-info h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 3.3vw, 3.2rem);
+  line-height: 1.05;
+  font-weight: 900;
+}
+
+html[data-theme='naifei'] .naifei-player-info p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1rem, 1.45vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+html[data-theme='naifei'] .naifei-player-desc {
+  display: -webkit-box;
+  max-width: 930px;
+  overflow: hidden;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+html[data-theme='naifei'] .naifei-player-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-top: 62px;
+}
+
+html[data-theme='naifei'] .naifei-player-actions button {
+  min-width: 128px;
+  min-height: 58px;
+  padding: 0 24px;
+  border-radius: 30px;
+  font-size: 1.18rem;
+  font-weight: 800;
+}
+
+html[data-theme='naifei'] .naifei-player-actions button:not(:first-child) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+html[data-theme='naifei'] .naifei-player-actions .naifei-link-button {
+  min-width: 70px;
+  background: transparent;
+  font-size: 2.2rem;
+}
+
+html[data-theme='naifei'] .naifei-player-lines {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-top: 4px;
+  scrollbar-width: none;
+}
+
+html[data-theme='naifei'] .naifei-player-lines::-webkit-scrollbar {
+  display: none;
+}
+
+html[data-theme='naifei'] .naifei-player-lines button {
+  min-height: 68px;
+  padding: 0 22px;
+  flex: 0 0 auto;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+html[data-theme='naifei'] .naifei-player-lines button.active {
+  position: relative;
+  color: #fff;
+}
+
+html[data-theme='naifei'] .naifei-player-lines button.active::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 8px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--nf-red);
+}
+
+html[data-theme='naifei'] .naifei-episode-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 14px;
+  max-height: calc(100dvh - 540px);
+  min-height: 160px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+html[data-theme='naifei'] .naifei-episode-grid button {
+  min-height: 76px;
+  padding: 0 18px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-theme='naifei'] .naifei-episode-grid button.active {
+  color: var(--nf-red);
+}
+
+html[data-theme='naifei'] .settings-drawer .el-overlay {
+  background: rgba(0, 0, 0, 0.36);
+}
+
+html[data-theme='naifei'] .settings-drawer.el-drawer,
+html[data-theme='naifei'] .settings-drawer .el-drawer {
+  width: 100vw !important;
+  background: #0a0a0a;
+  box-shadow: none;
+}
+
+html[data-theme='naifei'] .settings-drawer.el-drawer .el-drawer__header,
+html[data-theme='naifei'] .settings-drawer .el-drawer__header {
+  width: min(90vw, 1800px);
+  margin: 0 auto;
+  padding: 36px 0 18px;
+}
+
+html[data-theme='naifei'] .settings-drawer.el-drawer .el-drawer__body,
+html[data-theme='naifei'] .settings-drawer .el-drawer__body {
+  width: min(90vw, 1800px);
+  margin: 0 auto;
+  padding: 0 0 64px;
+}
+
+html[data-theme='naifei'] .drawer-head--hero {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+html[data-theme='naifei'] .drawer-head--hero::before {
+  content: '';
+  width: 5px;
+  height: 54px;
+  border-radius: 999px;
+  background: var(--nf-red);
+}
+
+html[data-theme='naifei'] .drawer-kicker,
+html[data-theme='naifei'] .drawer-subtitle {
+  display: none;
+}
+
+html[data-theme='naifei'] .drawer-head h3 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 3.4vw, 3.2rem);
+  font-weight: 900;
+}
+
+html[data-theme='naifei'] .drawer-body {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  overflow: auto;
+}
+
+html[data-theme='naifei'] .settings-block {
+  min-height: 76px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: var(--nf-radius);
+  background: var(--nf-panel-soft);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+html[data-theme='naifei'] .settings-block--overview {
+  order: 20;
+  grid-column: 1 / -1;
+  background: transparent;
+  padding: 0;
+}
+
+html[data-theme='naifei'] .settings-block--vod-config {
+  order: 1;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+  align-items: center;
+}
+
+html[data-theme='naifei'] .settings-block--source {
+  order: 2;
+  grid-column: span 2;
+}
+
+html[data-theme='naifei'] .settings-block--search-scope {
+  order: 3;
+  grid-column: span 2;
+}
+
+html[data-theme='naifei'] .settings-block--live-config {
+  order: 4;
+  grid-column: span 2;
+}
+
+html[data-theme='naifei'] .settings-block--theme {
+  order: 0;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(300px, 1fr);
+  align-items: center;
+  gap: 18px;
+  background: linear-gradient(90deg, rgba(135, 32, 42, 0.78), rgba(35, 35, 35, 0.78));
+}
+
+html[data-theme='naifei'] .settings-block--vod-config .settings-block-head .settings-mini-chip,
+html[data-theme='naifei'] .settings-block--vod-config .block-label {
+  display: none;
+}
+
+html[data-theme='naifei'] .settings-block--vod-config .el-textarea__inner {
+  min-height: 58px !important;
+  height: 58px !important;
+  resize: none;
+  font-size: 1.25rem;
+  line-height: 1.65;
+}
+
+html[data-theme='naifei'] .drawer-overview-grid--compact {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+html[data-theme='naifei'] .drawer-overview-card,
+html[data-theme='naifei'] .metric-card {
+  min-height: 76px;
+  border: 0;
+  border-radius: var(--nf-radius);
+  background: var(--nf-panel-soft);
+  padding: 14px 18px;
+}
+
+html[data-theme='naifei'] .drawer-overview-card span,
+html[data-theme='naifei'] .drawer-overview-card small,
+html[data-theme='naifei'] .block-label,
+html[data-theme='naifei'] .block-hint {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+html[data-theme='naifei'] .drawer-overview-card strong,
+html[data-theme='naifei'] .settings-block-head h4 {
+  color: #fff;
+  font-size: clamp(1.05rem, 1.7vw, 1.65rem);
+  font-weight: 800;
+  white-space: normal;
+}
+
+html[data-theme='naifei'] .settings-block-head {
+  align-items: center;
+  gap: 12px;
+}
+
+html[data-theme='naifei'] .settings-mini-chip {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-size: clamp(1rem, 1.5vw, 1.45rem);
+  font-weight: 800;
+}
+
+html[data-theme='naifei'] .settings-radio-group {
+  width: 100%;
+}
+
+html[data-theme='naifei'] .settings-radio-group .el-radio-button {
+  flex: 1;
+}
+
+html[data-theme='naifei'] .settings-radio-group .el-radio-button__inner {
+  width: 100%;
+  min-height: 58px;
+  border: 0;
+  border-radius: var(--nf-radius) !important;
+  background: rgba(18, 18, 18, 0.58);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+html[data-theme='naifei'] .settings-radio-group .el-radio-button__original-radio:checked + .el-radio-button__inner {
+  background: linear-gradient(180deg, #a82a32, #7f1f27);
+  color: #fff;
+  box-shadow: none;
+}
+
+html[data-theme='naifei'] .settings-block .el-input__wrapper,
+html[data-theme='naifei'] .settings-block .el-select__wrapper,
+html[data-theme='naifei'] .settings-block .el-textarea__inner {
+  border: 0;
+  border-radius: var(--nf-radius);
+  background: rgba(16, 16, 16, 0.64);
+  box-shadow: none;
+  color: #fff;
+}
+
+html[data-theme='naifei'] .settings-actions .el-button {
+  min-height: 52px;
+  border-radius: var(--nf-radius);
+  font-weight: 800;
+}
+
+@keyframes naifei-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1320px) {
+  html[data-theme='naifei'] .app-stage {
+    padding-inline: 32px;
+  }
+
+  html[data-theme='naifei'] .naifei-action-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  html[data-theme='naifei'] .wall-grid--masonry {
+    grid-template-columns: repeat(4, minmax(140px, 1fr));
+  }
+
+  html[data-theme='naifei'] .naifei-search-layout {
+    grid-template-columns: minmax(320px, 36vw) minmax(170px, 16vw) minmax(0, 1fr);
+  }
+
+  html[data-theme='naifei'] .naifei-player-head {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-theme='naifei'] .naifei-player-actions {
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  html[data-theme='naifei'] .naifei-episode-grid {
+    max-height: none;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  html[data-theme='naifei'] .drawer-body,
+  html[data-theme='naifei'] .drawer-overview-grid--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  html[data-theme='naifei'] .app-stage {
+    padding: 18px 16px 58px;
+  }
+
+  html[data-theme='naifei'] .naifei-home-top,
+  html[data-theme='naifei'] .naifei-player-head {
+    align-items: flex-start;
+  }
+
+  html[data-theme='naifei'] .naifei-home-top {
+    flex-direction: column;
+  }
+
+  html[data-theme='naifei'] .naifei-status-icons {
+    gap: 16px;
+    font-size: 1.8rem;
+  }
+
+  html[data-theme='naifei'] .naifei-category-tabs button {
+    min-height: 52px;
+    padding-inline: 18px;
+  }
+
+  html[data-theme='naifei'] .naifei-action-grid,
+  html[data-theme='naifei'] .wall-grid--masonry,
+  html[data-theme='naifei'] .naifei-search-results .wall-grid--masonry,
+  html[data-theme='naifei'] .naifei-episode-grid,
+  html[data-theme='naifei'] .drawer-body,
+  html[data-theme='naifei'] .drawer-overview-grid--compact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  html[data-theme='naifei'] .naifei-action-grid button {
+    min-height: 104px;
+  }
+
+  html[data-theme='naifei'] .naifei-search-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  html[data-theme='naifei'] .wall-grid--masonry,
+  html[data-theme='naifei'] .naifei-search-results .wall-grid--masonry,
+  html[data-theme='naifei'] .naifei-episode-grid,
+  html[data-theme='naifei'] .drawer-body,
+  html[data-theme='naifei'] .drawer-overview-grid--compact {
+    grid-template-columns: 1fr;
+  }
+
+  html[data-theme='naifei'] .naifei-keyboard {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
